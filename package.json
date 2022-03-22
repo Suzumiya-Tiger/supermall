@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve --open",
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@better-scroll/core": "^2.4.2",
+    "@better-scroll/observe-dom": "^2.4.2",
+    "@better-scroll/observe-image": "^2.4.2",
+    "@better-scroll/pull-up": "^2.4.2",
     "axios": "^0.18.1",
-    "better-scroll": "^1.13.2",
+    "better-scroll": "^1.15.2",
     "vue": "^2.5.17",
     "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.1",
@@ -17,6 +21,8 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-service": "^3.0.5",
+    "eslint": "^8.11.0",
+    "eslint-plugin-vue": "^8.5.0",
     "postcss-px-to-viewport": "0.0.3",
     "vue-template-compiler": "^2.5.17"
   }
