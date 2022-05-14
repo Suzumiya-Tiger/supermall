@@ -24,7 +24,8 @@ export default {
   data() {
     return {
       bs: null,
-      scrollNum: 10
+      scrollNum: 10,
+      currentIndex: 0
     };
   },
   mounted() {
@@ -41,23 +42,32 @@ export default {
         scrollX: false,
         scrollY: true,
         probeType: this.probeType,
-        pullUpLoad: true,
+        pullUpLoad: this.pullUpLoad,
         click: true
       });
-      this.bs.on('scroll', position => {
-        this.$emit('scroll', position);
-      });
-      this.bs.on('pullingUp', () => {
-        // 上拉加载事件
-        this.$emit('loadMore');
-        this.bs.finishPullUp();
-      });
+      if (this.probeType === 2 || this.probeType === 3) {
+        this.bs.on('scroll', position => {
+          this.$emit('scroll', position);
+        });
+      }
+      if (this.pullUpLoad) {
+        this.bs.on('pullingUp', () => {
+          // 上拉加载事件,实现原理应该是拉到已加载完成的模块的底部触发
+          this.$emit('loadMore');
+        });
+      }
+    },
+    getSCrollY() {
+      return this.bs ? this.bs.y : 0;
+    },
+    finishPullUp() {
+      this.bs.finishPullUp();
     },
     refreshScroll() {
-      this.bs.refresh();
+      this.bs && this.bs.refresh();
     },
     scrollTo(x = 0, y = 0, timer = 3000) {
-      this.bs.scrollTo(x, y, timer);
+      this.bs && this.bs.scrollTo(x, y, timer);
     }
   }
 };

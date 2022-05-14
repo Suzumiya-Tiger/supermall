@@ -1,35 +1,44 @@
 <template>
-  <div class="goods-item">
-    <img :src="goodsItem.show.img" alt="" />
+  <div class="goods-item" @click="itemClick">
+    <img v-lazy="showImage" alt="商品图片" @load="imgLoad" :key="showImage" />
     <div class="goods-info">
       <p>{{ goodsItem.title }}</p>
-      <span class="price">{{ goodsItem.price }} </span>
-      <span class="collect">{{ goodsItem.cfav }} </span>
+      <span class="price">{{ goodsItem.price }}</span>
+      <span class="collect">{{ goodsItem.cfav }}</span>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-
 export default {
-name:'GoodsListItem',
-props:{
-goodsItem:{
-  type:Object,
-  default(){
-    return {}
-  }
-}
-},
+  name: 'GoodsListItem',
+  props: {
+    goodsItem: {
+      type: Object,
+      default() {
+        return {};
+      }
+    }
+  },
   data() {
-    return {
-
+    return {};
+  },
+  computed: {
+    showImage() {
+      return this.goodsItem.image || this.goodsItem.show.img;
     }
   },
   methods: {
-
+    //  每次图片动态加载(新增)，
+    // 都会通知主页的scroll.refresh()更新容器尺寸(scrollHeight)
+    imgLoad() {
+      this.$bus.$emit('itemImageLoad');
+    },
+    itemClick() {
+      this.$router.push('/detail/' + this.goodsItem.iid);
+    }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -37,7 +46,6 @@ goodsItem:{
   padding-bottom: 40px;
   position: relative;
   width: 40vw;
-
 }
 
 .goods-item img {
